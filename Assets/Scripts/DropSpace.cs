@@ -1,16 +1,25 @@
 using UnityEngine;
+using UnityEngine.EventSystems; // Needed for detecting drop events
 
 public class DropSpace : MonoBehaviour
 {
-    // Detects collision with another GameObject
-    private void OnCollisionEnter2D(Collision2D collision)
+    public Draggable m_hasDraggable;
+    public bool Droppable()
     {
-        Draggable draggableComponent = collision.gameObject.GetComponent<Draggable>();
-        if (draggableComponent != null)
+        return m_hasDraggable == null;
+    }
+
+    public void SetDraggable(Draggable _draggable)
+    {
+        m_hasDraggable = _draggable;
+    }
+
+    private void OnTriggerExit2D(Collider2D _other)
+    {
+        Draggable draggable = _other.GetComponent<Draggable>();
+        if(draggable != null && m_hasDraggable == draggable)
         {
-            // Set the GameObject as a child of the drop space
-            collision.gameObject.transform.SetParent(transform, false);
-            draggableComponent.StopDragging();
+            m_hasDraggable = null;
         }
     }
 }

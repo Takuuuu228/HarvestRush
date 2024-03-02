@@ -2,61 +2,89 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
-    private bool isDragging = false;
-    private GameObject clone;
-    private Vector3 offset;
+    private bool m_isDragging;
+    private Vector3 m_offset;
+    private bool placedInDropSpace;
+    public Vector3 m_lastPosition;
+    private float m_fMovementtime = 15f;
+    private System.Nullable<Vector3> m_movementDestination;
 
-    void Update()
+    private static Draggable m_lastDraggable;
+
+    private void OnMouseDown()
     {
-        if (isDragging)
+        m_isDragging = true;
+        m_lastPosition = transform.position;
+        m_lastDraggable = this;
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
+        m_offset = new Vector2(transform.position.x - worldPos.x, transform.position.y - worldPos.y);
+        gameObject.layer = Layer.Dragging;
+    }
+
+    private void OnMouseDrag()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
+
+        transform.position = new Vector2(worldPos.x + m_offset.x, worldPos.y + m_offset.y);
+    }
+
+    private void OnMouseUp()
+    {
+        m_isDragging = false;
+        gameObject.layer = Layer.Default;
+    }
+
+    private void OnTriggerEnter2D(Collider2D _other)
+    {
+        Draggable colliderDraggable = _other.GetComponent<Draggable>();
+        DropSpace dropSpace = _other.GetComponent<DropSpace>();
+
+        if (colliderDraggable != null && m_lastDraggable == this)
         {
-            // マウスのワールド座標にオフセットを加えて、クローンの位置を更新
-            Vector3 mousePosition = GetMouseWorldPosition() + offset;
-            clone.transform.position = mousePosition;
+            ColliderDistance2D colliderDistance2D = _other.Distance(GetComponent<Collider2D>());
+            Vector3 diff = new Vector3(colliderDistance2D.normal.x, colliderDistance2D.normal.y) * colliderDistance2D.distance;
+
+            transform.position -= diff;
+        }
+        else if (dropSpace != null)
+        {
+            if (dropSpace.Droppable())
+            {
+                dropSpace.SetDraggable(this);
+                m_movementDestination = _other.transform.position;
+            }
+            else
+            {
+                m_movementDestination = m_lastPosition;
+            }
+        }
+        else
+        {
+            // no action
         }
     }
 
-    void OnMouseDown()
+    private void FixedUpdate()
     {
-        // ドラッグ開始時にオブジェクトをクローンし、ドラッグを開始
-        isDragging = true;
-        clone = Instantiate(gameObject, transform.position, Quaternion.identity);
-        clone.name = gameObject.name + " clone";
-        // クローンにDraggableコンポーネントを追加
-        if (clone.GetComponent<Draggable>() == null)
+        if (m_movementDestination.HasValue)
         {
-            clone.AddComponent<Draggable>();
-        }
+            if (m_isDragging)
+            {
+                m_movementDestination = null;
+                return;
+            }
 
-        // マウスのワールド座標を取得し、オフセットを計算
-        Vector3 mousePosition = GetMouseWorldPosition();
-        offset = transform.position - mousePosition;
-        // ドラッグ中はクローンを無視するレイヤーに設定
-        clone.layer = LayerMask.NameToLayer("Ignore Raycast");
-    }
-
-    void OnMouseUp()
-    {
-        // マウスを離したときにドラッグを終了
-        StopDragging();
-    }
-
-    // マウスのワールド座標を取得するヘルパーメソッド
-    private Vector3 GetMouseWorldPosition()
-    {
-        Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = Camera.main.nearClipPlane; // カメラからの距離
-        return Camera.main.ScreenToWorldPoint(mousePoint);
-    }
-
-    // ドラッグを終了するメソッド
-    public void StopDragging()
-    {
-        isDragging = false;
-        // クローンがDropSpaceの子でない場合は破棄
-        if (clone.transform.parent == null || !clone.transform.parent.GetComponent<DropSpace>())
-        {
-            Destroy(clone);
+            if(transform.position == m_movementDestination)
+            {
+                gameObject.layer = Layer.Default;
+                m_movementDestination = null;
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, m_movementDestination.Value, m_fMovementtime * Time.deltaTime);
+            }
         }
     }
 }
