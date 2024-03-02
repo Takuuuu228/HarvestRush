@@ -814,9 +814,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeedShop2
       objectReference: {fileID: 0}
+    - target: {fileID: 7268443859671590686, guid: 8f8f2e6313ec9c64f90e00545b354ef0, type: 3}
+      propertyPath: m_TagString
+      value: SeedShop
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: -3984607896747318376, guid: 8f8f2e6313ec9c64f90e00545b354ef0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8f8f2e6313ec9c64f90e00545b354ef0, type: 3}
 --- !u!1001 &936088324
 PrefabInstance:
@@ -828,6 +833,10 @@ PrefabInstance:
     - target: {fileID: 158308023017337830, guid: 2d8db747c371bc14c8991b6d07d505ec, type: 3}
       propertyPath: m_Name
       value: SeedShop1
+      objectReference: {fileID: 0}
+    - target: {fileID: 158308023017337830, guid: 2d8db747c371bc14c8991b6d07d505ec, type: 3}
+      propertyPath: m_TagString
+      value: SeedShop
       objectReference: {fileID: 0}
     - target: {fileID: 158308023017337831, guid: 2d8db747c371bc14c8991b6d07d505ec, type: 3}
       propertyPath: m_FlipX
@@ -892,6 +901,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 751140950621561756, guid: 2d8db747c371bc14c8991b6d07d505ec, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2d8db747c371bc14c8991b6d07d505ec, type: 3}
 --- !u!1 &1108517274
 GameObject:
@@ -988,6 +998,51 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1 &1246759068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1246759070}
+  - component: {fileID: 1246759069}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1246759069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246759068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63c1b1ccb8dcd149a35203da66b885f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 15000
+  scoreDisplay: {fileID: 1256206227}
+--- !u!4 &1246759070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246759068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5558842, y: -1.052584, z: -0.38214353}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1256206222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +1055,7 @@ GameObject:
   - component: {fileID: 1256206225}
   - component: {fileID: 1256206224}
   - component: {fileID: 1256206223}
+  - component: {fileID: 1256206227}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1091,6 +1147,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1256206227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256206222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c4ad0d020821443992eb2b6199bf77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 2117143948}
 --- !u!1 &1387217036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1256,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1447350190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8430247832185480096, guid: 264497fc084af3d42a19e0edab1f519f, type: 3}
+  m_PrefabInstance: {fileID: 8430247831342214158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1447350195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447350190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2576f85b9cf94f34fa3513a7a4ec2027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
+  seedPay: 500
+  insecticidePay: 10000
 --- !u!1 &1477076198 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1384292404898658015, guid: ff83fa5e49e76504e8f2942e3ca54222, type: 3}
@@ -1401,9 +1490,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeedShop3
       objectReference: {fileID: 0}
+    - target: {fileID: 6603441821954774351, guid: 554f7e3535fc3034bb4dfe5b8d8e084d, type: 3}
+      propertyPath: m_TagString
+      value: SeedShop
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: -6381895246899430107, guid: 554f7e3535fc3034bb4dfe5b8d8e084d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 554f7e3535fc3034bb4dfe5b8d8e084d, type: 3}
 --- !u!1 &1982411888
 GameObject:

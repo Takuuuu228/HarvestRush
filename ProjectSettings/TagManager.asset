@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Seed
   - Land
+  - SeedShop
+  - InsecticideShop
   layers:
   - Default
   - TransparentFX
