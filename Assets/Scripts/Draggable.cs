@@ -9,6 +9,7 @@ public class Draggable : MonoBehaviour
     public Vector3 m_lastPosition; // ドラッグ開始前のオブジェクトの位置
     private float m_fMovementtime = 15f; // 移動にかかる時間の係数
     private System.Nullable<Vector3> m_movementDestination; // 移動先の位置（null可能）
+    public bool placedInDropSpace;
 
     private static Draggable m_lastDraggable; // 最後にドラッグされたオブジェクトを追跡
 
@@ -43,6 +44,7 @@ public class Draggable : MonoBehaviour
     // トリガーに何かが入った時の処理
     private void OnTriggerEnter2D(Collider2D _other)
     {
+        placedInDropSpace = false;
         Draggable colliderDraggable = _other.GetComponent<Draggable>(); // 他のドラッガブルオブジェクト
         DropSpace dropSpace = _other.GetComponent<DropSpace>(); // ドロップスペースコンポーネント
 
@@ -58,9 +60,10 @@ public class Draggable : MonoBehaviour
         {
             if (dropSpace.Droppable()) // ドロップ可能な場合
             {
+                placedInDropSpace = true;
                 dropSpace.SetDraggable(this); // このドラッガブルをドロップスペースに設定
                 m_movementDestination = _other.transform.position; // 移動先をドロップスペースの位置に設定
-                Debug.Log("置いた");
+                
             }
             else
             {
@@ -72,6 +75,8 @@ public class Draggable : MonoBehaviour
         {
             // その他のケースでは何もしない
         }
+
+        Debug.Log(placedInDropSpace);
     }
 
     // 固定更新処理

@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 7628579461052865240}
   - component: {fileID: 2454164706755906501}
   - component: {fileID: 3758372418333656283}
+  - component: {fileID: 4255320752815495290}
   m_Layer: 0
   m_Name: Seed1
   m_TagString: Seed
@@ -228,3 +229,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_lastPosition: {x: 0, y: 0, z: 0}
+  placedInDropSpace: 0
+--- !u!114 &4255320752815495290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7776666336686368473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010b70ce146995149aeeaae20f726c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crop: {fileID: 7142694674858435572, guid: 844f6fc73fcafa347b8d1a0f82f83efb, type: 3}
+  waitTime: 5
+  draggable: {fileID: 3758372418333656283}
