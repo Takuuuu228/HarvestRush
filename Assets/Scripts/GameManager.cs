@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +25,22 @@ public class GameManager : MonoBehaviour
             // 既に存在する場合は、このGameObjectを破棄する
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator Inoperable(float i)
+    {
+        GameObject seedObject = GameObject.FindWithTag("Seed");
+        Draggable draggable = seedObject.GetComponent<Draggable>();
+
+        draggable.enabled = false;
+        yield return new WaitForSeconds(i);
+        draggable.enabled = true;
+        yield break;
+    }
+
+    public void CallInoperable(float i)
+    {
+        StartCoroutine("Inoperable", i);        
     }
 
     // スコアを減算するメソッド

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 158308023017337832}
   - component: {fileID: 158308023017337831}
   - component: {fileID: 1459785703}
-  - component: {fileID: 751140950621561756}
   - component: {fileID: 8526107937945164156}
   m_Layer: 0
   m_Name: SeedShop1
@@ -111,19 +110,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &751140950621561756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 158308023017337830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080c5e1da8fcbe14f9136b21c9333493, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_hasDraggable: {fileID: 0}
 --- !u!114 &8526107937945164156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,3 +123,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 7776666336686368473, guid: c913cf5259a42094882fce34f545de36, type: 3}
+  seedPay: 500
+  insecticidePay: 10000

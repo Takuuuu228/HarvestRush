@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Draggable : MonoBehaviour
 {
     private bool m_isDragging; // ドラッグ中かどうかを追跡
     private Vector3 m_offset; // ドラッグ開始時のマウス位置とオブジェクト位置のオフセット
-    private bool placedInDropSpace; // ドロップエリアに配置されたかどうか
     public Vector3 m_lastPosition; // ドラッグ開始前のオブジェクトの位置
     private float m_fMovementtime = 15f; // 移動にかかる時間の係数
     private System.Nullable<Vector3> m_movementDestination; // 移動先の位置（null可能）
@@ -14,7 +15,6 @@ public class Draggable : MonoBehaviour
     // マウスボタンが押された時の処理
     private void OnMouseDown()
     {
-        placedInDropSpace = false;
         m_isDragging = true; // ドラッグ状態を真に設定
         m_lastPosition = transform.position; // 最後の位置を現在の位置に設定
         m_lastDraggable = this; // このドラッガブルを最後にドラッグされたものとして設定
@@ -36,13 +36,6 @@ public class Draggable : MonoBehaviour
     // マウスボタンが離された時の処理
     private void OnMouseUp()
     {
-        //余裕があれば何もない場所にドロップされたときに元に戻るようにしたい
-
-        /*if (!placedInDropSpace)
-        {
-            m_movementDestination = m_lastPosition;
-        }*/
-
         m_isDragging = false; // ドラッグ状態を偽に設定
         gameObject.layer = Layer.Default; // オブジェクトのレイヤーをデフォルトに戻す
     }
@@ -50,8 +43,6 @@ public class Draggable : MonoBehaviour
     // トリガーに何かが入った時の処理
     private void OnTriggerEnter2D(Collider2D _other)
     {
-        Debug.Log("呼び出し");
-        placedInDropSpace = true;
         Draggable colliderDraggable = _other.GetComponent<Draggable>(); // 他のドラッガブルオブジェクト
         DropSpace dropSpace = _other.GetComponent<DropSpace>(); // ドロップスペースコンポーネント
 
@@ -61,7 +52,7 @@ public class Draggable : MonoBehaviour
             ColliderDistance2D colliderDistance2D = _other.Distance(GetComponent<Collider2D>());
             Vector3 diff = new Vector3(colliderDistance2D.normal.x, colliderDistance2D.normal.y) * colliderDistance2D.distance;
 
-            transform.position = m_lastPosition;
+            transform.position -= diff; // オブジェクトを衝突しない位置に移動
         }
         else if (dropSpace != null) // ドロップスペースに入った場合
         {
@@ -69,9 +60,11 @@ public class Draggable : MonoBehaviour
             {
                 dropSpace.SetDraggable(this); // このドラッガブルをドロップスペースに設定
                 m_movementDestination = _other.transform.position; // 移動先をドロップスペースの位置に設定
+                Debug.Log("置いた");
             }
             else
             {
+
                 m_movementDestination = m_lastPosition; // 移動先を最後の位置に戻す
             }
         }
@@ -103,5 +96,10 @@ public class Draggable : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, m_movementDestination.Value, m_fMovementtime * Time.deltaTime);
             }
         }
+    }
+
+    IEnumerator Test()
+    {
+        yield return new WaitForSeconds(3);
     }
 }

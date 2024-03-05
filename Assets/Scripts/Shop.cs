@@ -16,7 +16,7 @@ public class Shop : MonoBehaviour
         if (prefab != null)
         {
             // Instantiateメソッドを使用して、プレハブのインスタンスを現在のGameObjectの位置に生成する
-            Instantiate(prefab, transform.position, Quaternion.identity);
+            Instantiate(prefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
             if (this.gameObject.CompareTag("SeedShop"))
             {
                 // GameManagerのインスタンスを使用してスコアを500減算する
