@@ -25,6 +25,7 @@ public class SeedManager : MonoBehaviour
     }
 
     // GameObjectを削除し、指定されたPrefabを生成するCoroutine。
+
     private IEnumerator RemoveAndSpawnCoroutine()
     {
         // 5秒待つ。
@@ -33,8 +34,10 @@ public class SeedManager : MonoBehaviour
         // このGameObjectを削除。
         Destroy(gameObject);
 
-        // cropのPrefabを現在の位置に生成。
-        Instantiate(crop, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        // cropのPrefabを現在の位置に生成するが、z座標を0に設定する。
+        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, 0.0f);
+        GameObject spawnedCrop = Instantiate(crop, spawnPosition, Quaternion.identity);
     }
+
 }
 

@@ -6,11 +6,11 @@ public class Draggable : MonoBehaviour
 {
     private bool m_isDragging; // ドラッグ中かどうかを追跡
     private Vector3 m_offset; // ドラッグ開始時のマウス位置とオブジェクト位置のオフセット
-    public Vector3 m_lastPosition; // ドラッグ開始前のオブジェクトの位置
     private float m_fMovementtime = 15f; // 移動にかかる時間の係数
     private System.Nullable<Vector3> m_movementDestination; // 移動先の位置（null可能）
-    public bool placedInDropSpace;
 
+    public bool placedInDropSpace;
+    public Vector3 m_lastPosition; // ドラッグ開始前のオブジェクトの位置
     private static Draggable m_lastDraggable; // 最後にドラッグされたオブジェクトを追跡
 
     // マウスボタンが押された時の処理
@@ -23,6 +23,9 @@ public class Draggable : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y)); // マウス位置をワールド座標に変換
         m_offset = new Vector2(transform.position.x - worldPos.x, transform.position.y - worldPos.y); // オフセットを計算
         gameObject.layer = Layer.Dragging; // オブジェクトのレイヤーをドラッグ中に変更
+
+        Debug.Log("a");
+
     }
 
     // マウスがドラッグされている間の処理

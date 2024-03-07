@@ -228,8 +228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9183f556795253442bf80f1eeec52d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lastPosition: {x: 0, y: 0, z: 0}
   placedInDropSpace: 0
+  m_lastPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &4255320752815495290
 MonoBehaviour:
   m_ObjectHideFlags: 0
