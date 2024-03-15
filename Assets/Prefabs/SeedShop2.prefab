@@ -123,5 +123,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 9110367868584805201, guid: 77d8b2a60e191a44a8c1da4b6a0cefca, type: 3}
-  seedPay: 500
+  seedPay: 800
   insecticidePay: 10000

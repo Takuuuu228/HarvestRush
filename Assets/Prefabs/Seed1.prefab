@@ -243,5 +243,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crop: {fileID: 7142694674858435572, guid: 844f6fc73fcafa347b8d1a0f82f83efb, type: 3}
-  waitTime: 5
+  waitTime: 3
   draggable: {fileID: 3758372418333656283}

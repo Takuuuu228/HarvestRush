@@ -46,5 +46,11 @@ public class GameManager : MonoBehaviour
         scoreDisplay.UpdateScoreText();
     }
 
+    public void IncreaseScore(int amount)
+    {
+        score += amount;
+        scoreDisplay.UpdateScoreText();
+    }
+
 
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,6 +10,7 @@ using UnityEngine.Events;
 
 public class Timer : MonoBehaviour
 {
+
     public UnityEvent onTimerEnd;
 
     [Range(0, 23)]
@@ -62,7 +64,8 @@ public class Timer : MonoBehaviour
     bool timerRunning = false;
     bool timerPaused = false;
     public double timeRemaining;
-    
+
+
 
     private void Awake()
     {
