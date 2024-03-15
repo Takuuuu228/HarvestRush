@@ -35,7 +35,7 @@ public class SeedManager : MonoBehaviour
         Destroy(gameObject);
 
         // cropのPrefabを現在の位置に生成するが、z座標を0に設定する。
-        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, 0.0f);
+        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, -1.0f);
         GameObject spawnedCrop = Instantiate(crop, spawnPosition, Quaternion.identity);
     }
 

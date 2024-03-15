@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: -7970462628658950996}
   m_Layer: 0
   m_Name: Crop2
-  m_TagString: Untagged
+  m_TagString: Orange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

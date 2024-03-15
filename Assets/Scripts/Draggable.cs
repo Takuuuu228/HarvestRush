@@ -12,10 +12,13 @@ public class Draggable : MonoBehaviour
     public bool placedInDropSpace;
     public Vector3 m_lastPosition; // ドラッグ開始前のオブジェクトの位置
     private static Draggable m_lastDraggable; // 最後にドラッグされたオブジェクトを追跡
+    private bool m_hasReachedDestination = false; // 目的地に到達したかどうかを追跡
+
 
     // マウスボタンが押された時の処理
     private void OnMouseDown()
     {
+        if (m_hasReachedDestination) { return; }
         m_isDragging = true; // ドラッグ状態を真に設定
         m_lastPosition = transform.position; // 最後の位置を現在の位置に設定
         m_lastDraggable = this; // このドラッガブルを最後にドラッグされたものとして設定
@@ -24,22 +27,25 @@ public class Draggable : MonoBehaviour
         m_offset = new Vector2(transform.position.x - worldPos.x, transform.position.y - worldPos.y); // オフセットを計算
         gameObject.layer = Layer.Dragging; // オブジェクトのレイヤーをドラッグ中に変更
 
-        Debug.Log("a");
 
     }
 
     // マウスがドラッグされている間の処理
     private void OnMouseDrag()
     {
+        if (m_hasReachedDestination) { return; }
+        
         Vector3 mousePos = Input.mousePosition; // マウスのスクリーン位置を取得
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y)); // マウス位置をワールド座標に変換
 
         transform.position = new Vector2(worldPos.x + m_offset.x, worldPos.y + m_offset.y); // 新しい位置にオブジェクトを移動
+        
     }
 
     // マウスボタンが離された時の処理
     private void OnMouseUp()
     {
+        if (m_hasReachedDestination) { return; }
         m_isDragging = false; // ドラッグ状態を偽に設定
         gameObject.layer = Layer.Default; // オブジェクトのレイヤーをデフォルトに戻す
     }
@@ -57,7 +63,8 @@ public class Draggable : MonoBehaviour
             ColliderDistance2D colliderDistance2D = _other.Distance(GetComponent<Collider2D>());
             Vector3 diff = new Vector3(colliderDistance2D.normal.x, colliderDistance2D.normal.y) * colliderDistance2D.distance;
 
-            transform.position -= diff; // オブジェクトを衝突しない位置に移動
+            m_movementDestination = m_lastPosition;　// オブジェクトを衝突しない位置に移動
+            return;
         }
         else if (dropSpace != null) // ドロップスペースに入った場合
         {
@@ -66,20 +73,27 @@ public class Draggable : MonoBehaviour
                 placedInDropSpace = true;
                 dropSpace.SetDraggable(this); // このドラッガブルをドロップスペースに設定
                 m_movementDestination = _other.transform.position; // 移動先をドロップスペースの位置に設定
-                
+
+                Debug.Log("ドロップした");
+
+                /*//ここにマウス入力を受け付けないスクリプトを書く
+                if (this.gameObject.CompareTag("Seed"))
+                {
+                    m_hasReachedDestination = true; // 目的地に到達したかどうかを追跡
+                }*/
+                return;
             }
             else
             {
 
                 m_movementDestination = m_lastPosition; // 移動先を最後の位置に戻す
+                return;
             }
         }
         else
         {
             // その他のケースでは何もしない
         }
-
-        Debug.Log(placedInDropSpace);
     }
 
     // 固定更新処理
@@ -101,13 +115,9 @@ public class Draggable : MonoBehaviour
             else
             {
                 // 現在の位置から移動先へ滑らかに移動
-                transform.position = Vector3.Lerp(transform.position, m_movementDestination.Value, m_fMovementtime * Time.deltaTime);
+                transform.position = Vector3.Lerp(new Vector3(transform.position.x, transform.position.y, -1.0f), m_movementDestination.Value, m_fMovementtime * Time.deltaTime);
+
             }
         }
-    }
-
-    IEnumerator Test()
-    {
-        yield return new WaitForSeconds(3);
     }
 }

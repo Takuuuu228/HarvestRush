@@ -8,6 +8,9 @@ TagManager:
   - Land
   - SeedShop
   - InsecticideShop
+  - Apple
+  - Orange
+  - Peach
   layers:
   - Default
   - TransparentFX
