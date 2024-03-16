@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public int score = 15000;
     [SerializeField] private ScoreDisplay scoreDisplay;
 
+
     // シングルトンパターンを実装するための静的インスタンス
     public static GameManager instance;
 
