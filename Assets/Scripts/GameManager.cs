@@ -4,12 +4,9 @@ using UnityEngine.SceneManagement; // 追加: SceneManagerを使用するため
 
 public class GameManager : MonoBehaviour
 {
-    // ゲームのスコアを保持する変数
     public int score = 15000;
-    [SerializeField] private ScoreDisplay scoreDisplay;
+    private ScoreDisplay scoreDisplay; // SerializeField属性を削除し、privateに設定
 
-
-    // シングルトンパターンを実装するための静的インスタンス
     public static GameManager instance;
 
     private void Awake()
@@ -18,12 +15,35 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // ScoreDisplayコンポーネントをシーンから検索して割り当てる
+            scoreDisplay = FindObjectOfType<ScoreDisplay>();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 'Main'シーンがロードされた場合のみスコアをリセット
+        if (scene.name == "Main")
+        {
+            score = 15000;
+            // シーンが切り替わるたびにScoreDisplayを再検索して割り当てる
+            scoreDisplay = FindObjectOfType<ScoreDisplay>();
+            scoreDisplay.UpdateScoreText();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
 
     private IEnumerator Inoperable(float i)
     {
