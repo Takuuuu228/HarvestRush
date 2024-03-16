@@ -230,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placedInDropSpace: 0
   m_lastPosition: {x: 0, y: 0, z: 0}
+  audioSource: {fileID: 7466432376510550441, guid: 85e33e82222dda64b90cb41100ad6e52, type: 3}
 --- !u!114 &1878238661673239921
 MonoBehaviour:
   m_ObjectHideFlags: 0

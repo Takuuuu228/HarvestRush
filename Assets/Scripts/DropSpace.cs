@@ -5,6 +5,7 @@ using UnityEngine.EventSystems; // イベントシステムを使用するために必要
 public class DropSpace : MonoBehaviour
 {
     public Draggable m_hasDraggable; // 現在このドロップスペースに配置されているドラッガブルオブジェクト
+    public AudioSource audioSource;
 
     // ドロップ可能かどうかを判断する関数
     public bool Droppable()
@@ -18,6 +19,11 @@ public class DropSpace : MonoBehaviour
     {
         // 引数として受け取ったドラッガブルオブジェクトをm_hasDraggableに設定
         m_hasDraggable = _draggable;
+        if (m_hasDraggable.gameObject.tag == "Seed")
+        {
+            audioSource.Play();
+        }
+
     }
 
     // 他のコライダーがこのドロップスペースから出て行った時に呼ばれる関数

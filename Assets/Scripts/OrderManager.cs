@@ -11,12 +11,14 @@ public class ObjectScorePair
 
 public class OrderManager : MonoBehaviour
 {
-    public AudioSource audioSource;
+    public AudioSource okAudio;
+    public AudioSource noAudio;
 
     // ObjectScorePairの配列を使用して、オブジェクトとそれに対応するスコアを保持します。
     public ObjectScorePair[] objectsToSpawnWithScore;
 
-    public ParticleSystem particleSystemToPlay;
+    public ParticleSystem particleSystemOfMoney;
+    public ParticleSystem particleSystemOfCalm;
 
     void Start()
     {
@@ -43,14 +45,33 @@ public class OrderManager : MonoBehaviour
                 }
             }
 
-            audioSource.Play();
+            okAudio.Play();
             Destroy(collision.gameObject);
             Destroy(firstChild);
 
-            PlayParticleSystem();
+            PlayParticleSystem(particleSystemOfMoney);
             InstantiateObject();
 
-            
+
+        }
+        else if(collision.gameObject.tag != firstChild.tag)
+        {
+            // GameManagerのIncreaseScoreメソッドを呼び出してスコアを加算します。
+            // オブジェクトに関連付けられたスコアを探します。
+            foreach (var pair in objectsToSpawnWithScore)
+            {
+                if (pair.gameObject.tag == firstChild.tag)
+                {
+                    GameManager.instance.DecreaseScore(pair.score);
+
+                    break; // スコアを減算したらループを抜けます。
+                }
+            }
+
+            noAudio.Play();
+            Destroy(collision.gameObject);
+
+            PlayParticleSystem(particleSystemOfCalm);
         }
     }
 
@@ -75,12 +96,12 @@ public class OrderManager : MonoBehaviour
         }
     }
 
-    void PlayParticleSystem()
+    void PlayParticleSystem(ParticleSystem particle)
     {
-        if (particleSystemToPlay != null)
+        if (particle != null)
         {
-            particleSystemToPlay.transform.position = transform.position;
-            particleSystemToPlay.Play();
+            particle.transform.position = transform.position;
+            particle.Play();
         }
         else
         {
